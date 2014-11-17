@@ -3,8 +3,12 @@ Template.Chatroom.helpers({
 	messages: function() {
 		return Messages.find();
 	},
+	time: function(){
+		var time = this.createdAt.toTimeString();
+		return time;
+	},
 	username: function() {
-		return (this.username || 'Annonymous');
+		return this.username;
 	}
 
 });
@@ -12,24 +16,13 @@ Template.Chatroom.helpers({
 Template.Chatroom.events({
 
 	'keyup #chat_message': function(e, t) {
-		if (e.keyCode === 13 && e.currentTarget.value.length) {
+		var message = e.currentTarget.value;
 
-			var username = 'Annonymous',
-					user = Meteor.users.findOne(Meteor.userId()),
-					newMsg;
-
-			if (Meteor.userId()) {
-				username = user.username || user.emails[0].address
-			}
-
-			newMsg = {
-				userId: Meteor.userId(),
-				content: e.currentTarget.value.trim(),
-				username: username
-			};
-
-			Messages.insert(newMsg);
-
+		if (e.keyCode === 13 && message.length) {
+			Message.create({
+				content: message,
+				chatroomId: this._id
+			});
 			e.currentTarget.value = '';
 		}
 	}

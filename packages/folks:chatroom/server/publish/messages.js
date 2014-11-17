@@ -1,17 +1,20 @@
-Meteor.publish('messages', function() {
+Meteor.publish('messages', function(chatroomId) {
 
-	var messages,
-			sub = this,
-			handle;
+	var	sub = this,
+			handle = null;
 
-	var cursor = Messages.find();
+	var cursor = Messages.find({
+		chatroomId: chatroomId
+	}, {
+		sort: { createdAt: 1 }
+	});
 
 	handle = cursor.observeChanges({
 
 		added: function(id, message) {
 			var user = Meteor.users.findOne({ _id: message.userId });
 			if (user) {
-				message.username = (user.emails[0].address);
+				message.username = (user.username || user.emails[0].address);
 			}
 			sub.added('messages', id, message);
 			return;
@@ -34,6 +37,6 @@ Meteor.publish('messages', function() {
     return;
   }
 
-	return messages;
+	return;
 
 });

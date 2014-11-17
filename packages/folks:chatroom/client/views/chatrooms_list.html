@@ -1,0 +1,27 @@
+<template name="ChatroomsList">
+
+	<div class="container">
+
+		<ul>
+      {{#each chatrooms}}
+      <li>
+        {{#linkTo route='chatroom.single'}}
+          {{name}}
+        {{/linkTo}}
+      </li>
+      {{/each}}
+		</ul>
+
+	</div>
+
+  <footer class="footer">
+
+    <div class="container">
+
+		  <input type="text" class="form-control" id="chatroom_create" placeholder="New chatroom...">
+
+    </div>
+
+  </footer>
+
+</template>

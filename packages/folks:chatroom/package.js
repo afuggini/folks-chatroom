@@ -14,6 +14,7 @@ Package.onUse(function(api) {
     "underscore",
     "check",
     "templating",
+    "less",
     "reactive-var"
   ]);
 
@@ -22,31 +23,39 @@ Package.onUse(function(api) {
     "minimongo",
     "underscore",
     "check",
-    "templating"
+    "templating",
+    "less"
   ]);
 
   // Common
   api.addFiles([
     'both/collections/chatrooms.js',
     'both/collections/messages.js',
+    'both/methods/chatrooms.js',
+    'both/methods/messages.js'
   ], ['client', 'server']);
 
   // Client
   api.addFiles([
     'client/views/chatroom.html',
     'client/views/chatroom.js',
-    'client/views/chatroom.less'
+    'client/views/chatroom.less',
+    'client/views/chatrooms_list.html',
+    'client/views/chatrooms_list.js'
   ], ['client']);
 
   // Server
   api.addFiles([
+    'server/publish/chatrooms.js',
     'server/publish/messages.js'
   ], ['server']);
 
   // Export
   api.export([
     "Chatrooms",
-    "Messages"
+    "Chatroom",
+    "Messages",
+    "Message"
   ], ['client', 'server']);
 
 });

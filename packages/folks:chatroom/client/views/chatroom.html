@@ -1,13 +1,15 @@
 <template name="Chatroom">
 
 	<div class="container">
-		
+
+		<h1>{{name}}</h1>
+
 		<ul>
 		{{#each messages}}
-			<li><strong>{{username}}</strong>: {{content}}</li>
+			<li><span class="badge">{{time}}</span> <strong>{{username}}</strong>: {{content}}</li>
 		{{/each}}
 		</ul>
-		
+
 	</div>
 
   <footer class="footer">
@@ -15,7 +17,7 @@
     <div class="container">
 
 		  <input type="text" class="form-control" id="chat_message" placeholder="Message...">
-		  
+
     </div>
 
   </footer>
