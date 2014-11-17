@@ -1,0 +1,23 @@
+<template name="Chatroom">
+
+	<div class="container">
+		
+		<ul>
+		{{#each messages}}
+			<li><strong>{{username}}</strong>: {{content}}</li>
+		{{/each}}
+		</ul>
+		
+	</div>
+
+  <footer class="footer">
+
+    <div class="container">
+
+		  <input type="text" class="form-control" id="chat_message" placeholder="Message...">
+		  
+    </div>
+
+  </footer>
+
+</template>
