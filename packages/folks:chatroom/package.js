@@ -9,23 +9,18 @@ Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
   api.use([
+    "accounts-base",
     "mongo",
     "minimongo",
     "underscore",
+    "mrt:moment",
     "check",
     "templating",
     "less",
     "reactive-var"
   ]);
 
-  api.imply([
-    "mongo",
-    "minimongo",
-    "underscore",
-    "check",
-    "templating",
-    "less"
-  ]);
+  api.imply([]);
 
   // Common
   api.addFiles([

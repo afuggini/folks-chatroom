@@ -1,8 +1,8 @@
 <template name="ChatroomsList">
 
-	<div class="container">
+  <div class="container">
 
-		<ul>
+    <ul>
       {{#each chatrooms}}
       <li>
         {{#linkTo route='chatroom.single'}}
@@ -10,15 +10,15 @@
         {{/linkTo}}
       </li>
       {{/each}}
-		</ul>
+    </ul>
 
-	</div>
+  </div>
 
   <footer class="footer">
 
     <div class="container">
 
-		  <input type="text" class="form-control" id="chatroom_create" placeholder="New chatroom...">
+      <input type="text" class="form-control" id="chatroom_create" placeholder="New chatroom...">
 
     </div>
 
