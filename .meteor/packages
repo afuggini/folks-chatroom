@@ -10,3 +10,5 @@ accounts-ui
 less
 ian:bootstrap-3
 iron:router
+folks:user
+

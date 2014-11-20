@@ -1,5 +1,7 @@
 <template name="ChatroomsList">
 
+  {{#if currentUser}}
+
   <div class="container">
 
     <ul>
@@ -23,5 +25,15 @@
     </div>
 
   </footer>
+
+  {{else}}
+
+  <div class="container">
+    <p>
+      Please log in.
+    </p>
+  </div>
+
+  {{/if }}
 
 </template>

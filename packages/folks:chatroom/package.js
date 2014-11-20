@@ -10,6 +10,7 @@ Package.onUse(function(api) {
 
   api.use([
     "accounts-base",
+    "folks:user",
     "mongo",
     "minimongo",
     "underscore",
