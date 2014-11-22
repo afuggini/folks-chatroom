@@ -6,6 +6,10 @@ Chatroom.create = function(params, cb){
   return Meteor.call('chatroomCreate', params, cb);
 };
 
+Chatroom.invite = function(params, cb){
+  return Meteor.call('chatroomInvite', params, cb);
+};
+
 Chatroom.can = {
   view: function(userId){
     return User.isAdmin(userId);

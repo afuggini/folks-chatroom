@@ -1,17 +1,26 @@
 Meteor.publish('chatrooms', function() {
 
-	var sub = this,
-			handle;
+  var sub = this,
+      handle,
+      userId = this.userId;
 
-	var cursor = Chatrooms.find();
+  if (!userId) {
+    throw new Meteor.Error('logged-out', 'Permission denied');
+  }
 
-	handle = cursor.observeChanges({
+  // Select any chatroom user owns or is invited to
+  var cursor = Chatrooms.find({$or: [
+    { userId: userId },
+    { guestUsers: { $in: [userId] } }
+  ]});
 
-		added: function(id, chatroom) {
-			sub.added('chatrooms', id, chatroom);
-			return;
-		},
-		changed: function(id, fields) {
+  handle = cursor.observeChanges({
+
+    added: function(id, chatroom) {
+      sub.added('chatrooms', id, chatroom);
+      return;
+    },
+    changed: function(id, fields) {
       sub.changed('chatrooms', id, fields);
       return;
     },
@@ -20,46 +29,50 @@ Meteor.publish('chatrooms', function() {
       return;
     }
 
-	});
+  });
 
-	sub.ready();
+  sub.ready();
 
   sub.onStop = function() {
     handle.stop();
     return;
   }
 
-	return;
+  return;
 
 });
 
 Meteor.publish('chatroom_single', function(id) {
 
-	var sub = this,
-			handle = null;
-      // messagesHandle = [];
+  var sub = this,
+      handle = null,
+      userId = this.userId;
 
   // Validate params
-  // TODO: Improve validation
   check(id, String);
 
-  // function publishMessages(chatroomId) {
-  //   var messagesCursor = Messages.find({chatroomId: chatroomId});
-  //   messagesHandle[chatroomId] = Mongo.Collection._publishCursor(messagesCursor, sub, 'messages');
-  // }
+  if (!userId) {
+    throw new Meteor.Error('logged-out', 'Permission denied');
+  }
 
-	var cursor = Chatrooms.find({_id: id}, {
-    sort: { createdAt: 1 }
+  // Publish only if is creator or guest
+  var cursor = Chatrooms.find({
+    $and: [
+      { _id: id },
+      { $or: [
+        { userId: userId },
+        { guestUsers: { $in: [userId] } }
+      ] }
+    ]
   });
 
-	handle = cursor.observeChanges({
+  handle = cursor.observeChanges({
 
-		added: function(id, chatroom) {
-      // publishMessages(id);
-			sub.added('chatrooms', id, chatroom);
-			return;
-		},
-		changed: function(id, fields) {
+    added: function(id, chatroom) {
+      sub.added('chatrooms', id, chatroom);
+      return;
+    },
+    changed: function(id, fields) {
       sub.changed('chatrooms', id, fields);
       return;
     },
@@ -68,15 +81,15 @@ Meteor.publish('chatroom_single', function(id) {
       return;
     }
 
-	});
+  });
 
-	sub.ready();
+  sub.ready();
 
   sub.onStop = function() {
     handle.stop();
     return;
   }
 
-	return;
+  return;
 
 });
