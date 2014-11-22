@@ -4,9 +4,9 @@ Meteor.publish('chatrooms', function() {
       handle,
       userId = this.userId;
 
-  if (!userId) {
-    throw new Meteor.Error('logged-out', 'Permission denied');
-  }
+  // if (!userId) {
+  //   throw new Meteor.Error('logged-out', 'Permission denied');
+  // }
 
   // Select any chatroom user owns or is invited to
   var cursor = Chatrooms.find({$or: [
